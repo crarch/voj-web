@@ -1,5 +1,11 @@
 import moment from 'moment';
-import 'moment/locale/zh-cn'
+import 'moment/locale/zh-cn';
+import { createHashHistory as createHistory } from 'history';
+
+const history = createHistory();
+export function getHistory() {
+  return history;
+}
 
 export function isMobileDevice() {
   const sUserAgent = navigator.userAgent;
@@ -207,7 +213,7 @@ export function isChinese(temp) {
 }
 
 export function getMailHost(emailAddress) {
-  if (typeof(emailAddress) !== "string") return '';
+  if (typeof (emailAddress) !== "string") return '';
   let mailHost = emailAddress.slice(emailAddress.search('@') + 1, emailAddress.length);
   if (mailHost.match(/[.]/g).length >= 2) {
     return mailHost.slice(mailHost.lastIndexOf('.', mailHost.length - 5) + 1);
