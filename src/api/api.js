@@ -1,10 +1,9 @@
 import Constants from "../config/Constants";
-import { objectUpdate, urlEncode } from "../utils/utils";
-import { notification } from 'antd';
-import store from "../data/store";
-import { setConfig, setErrorInfo } from "../data/action";
+// import { objectUpdate, urlEncode } from "../utils/utils";
+// import { setConfig, setErrorInfo } from "../data/action";
+// import store from "../data/store";
 
-export class API {
+class API {
   constructor(props) {
     // this.host = window.location.hostname === 'localhost' ? 'localhost' : Constants.API_HOST_RELEASE;
     this.host = Constants.API_HOST_RELEASE;
@@ -14,11 +13,13 @@ export class API {
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
-    this.url = `${this.protocol}://${this.host}:${this.port === null ? "" : this.port}${this.api_prefix}`;
+    // this.url = `http://localhost:8000/${this.protocol}://${this.host}${this.port === null ? "" : (':' + this.port)}${this.api_prefix}`;
+    this.url = `${this.protocol}://${this.host}${this.port === null ? "" : (':' + this.port)}${this.api_prefix}`;
     this.access_token = '';
     this.refresh_token = '';
   }
   set_token(access_token, refresh_token) {
+    debugger;
     // this.access_token = access_token || this.access_token;
     // this.refresh_token = refresh_token || this.refresh_token;
     if (access_token !== undefined)
@@ -35,15 +36,15 @@ export class API {
     return this.request(`${router}/${key}`, method, data);
   }
   update_config() {
-    let config = store.getState().config;
-    config.data.api_token = this.get_token();
-    console.log('config.data.api_token', config.data.api_token)
+    // let config = store.getState().config;
+    // config.data.api_token = this.get_token();
+    // console.log('config.data.api_token', config.data.api_token)
     // config.save();
-    store.dispatch(setConfig(config));
+    // store.dispatch(setConfig(config));
   }
   load_from_config() {
-    const config = store.getState().config;
-    this.set_token(config.data.api_token.access_token, config.data.api_token.refresh_token);
+    // const config = store.getState().config;
+    // this.set_token(config.data.api_token.access_token, config.data.api_token.refresh_token);
   }
   get_headers(refresh = false, access = true) {
     let headers = {
@@ -72,14 +73,14 @@ export class API {
       resp = await fetch(`${this.url}/${router}`, payload);
     } catch (e) {
       console.error(e);
-      store.dispatch(setErrorInfo(e));
+      // store.dispatch(setErrorInfo(e));
       resp = { status: 433, error: "Error when fetching internet" };
       return { code: resp.status, error: resp.statusText };
     }
     let js = null;
     try { js = await resp.json(); } catch (e) {
       console.error(e);
-      store.dispatch(setErrorInfo(e));
+      // store.dispatch(setErrorInfo(e));
       return { code: resp.status, error: resp.statusText };
     }
     console.log('raw js:', js);
@@ -118,7 +119,7 @@ export class API {
         }
         else {
           // 判定为 update_token 也过期，要求重新登录
-          store.dispatch(setErrorInfo("登录过期，请重新登录"));
+          // store.dispatch(setErrorInfo("登录过期，请重新登录"));
           return null;
         }
       } catch (e) {
@@ -141,7 +142,7 @@ export class API {
         this.update_config();
       }
     } else {
-      store.dispatch(setErrorInfo(js));
+      // store.dispatch(setErrorInfo(js));
     }
     return js;
   }

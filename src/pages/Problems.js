@@ -1,7 +1,7 @@
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, BarChartOutlined } from '@ant-design/icons';
 import { Button } from "antd/lib/radio";
-import api from "../api/api";
+import api from '../api/api';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;

@@ -1,6 +1,7 @@
 import api from "../api/api";
+console.log('api', api);
 
-const ITEM_NAME = "crosst_config";
+const ITEM_NAME = "voj_config";
 
 class Config {
   constructor() {
@@ -17,6 +18,10 @@ class Config {
       theme_avaliable: [
         '默认主题',
       ],
+      api_token: {
+        access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzQwMTg4NjI3NDB9.dnFnMq3giXDyeUEtAO0l5kkFaSCvT42mNhP_fk8v87k",
+        refresh_token: ""
+      }
     };
     this.data = this.data_default;
     this.theme = this.theme_avaliable["默认主题"];
@@ -52,12 +57,14 @@ class Config {
     }
     this.theme = this.theme_avaliable[this.data.theme_name];
     if (!this.theme) this.theme = this.theme_avaliable["default"];
-    // api.set_token(this.data.api_token.access_token, this.data.api_token.refresh_token);
+    api.set_token(this.data.api_token.access_token, this.data.api_token.refresh_token);
   }
 
   save() {
     console.log("Config: saving config...");
-    // this.data.api_token = api.get_token();
+    const tokens = api.get_token();
+    if (tokens.access_token || tokens.refresh_token)
+      this.data.api_token = tokens;
     const s = JSON.stringify(this.data);
     localStorage.setItem(ITEM_NAME, s);
     return s;
