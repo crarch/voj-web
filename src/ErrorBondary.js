@@ -38,7 +38,7 @@ export default class ErrorBoundary extends React.Component {
         <p>开发者邮箱：<a href="mailto:chiro2001@163.com">chiro2001@163.com</a></p>
         <hr></hr>
         <p>详细错误：</p>
-        <code>{JSON.stringify(this.state.error)}</code>
+        <pre style={{ overflowX: "auto" }}>{JSON.stringify(this.state.error)}</pre>
       </div>;
     }
     return this.props.children;

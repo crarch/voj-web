@@ -19,7 +19,6 @@ class API {
     this.refresh_token = '';
   }
   set_token(access_token, refresh_token) {
-    debugger;
     // this.access_token = access_token || this.access_token;
     // this.refresh_token = refresh_token || this.refresh_token;
     if (access_token !== undefined)

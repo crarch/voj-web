@@ -23,7 +23,7 @@ const Submit = (props) => {
       });
       const oid = resp._id['$oid'];
       console.log('oid', oid);
-      const resp2 = await api.request('queue', "GET");
+      const resp2 = await api.request_key('judge/record', oid, "GET");
       console.log(resp2);
     }} onSave={value => { }}></Editor>
   </div>;

@@ -6,9 +6,6 @@ import { objectUpdate, saveCode, sleep } from "../utils/utils";
 import Wavedrom from "wavedrom";
 
 const Submit = (props) => {
-  // const [ignored, setIgnored] = React.useState((() => {
-  //   Wavedrom.processAll();
-  // }));
   const [state, setInnerState] = React.useState({
     problemId: "1001",
     result: null,
