@@ -1,7 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
-import api from "./api/api";
-
-const ITEM_NAME = "voj_config";
+const ITEM_NAME = "group_bying_config";
 
 class Config {
   constructor() {

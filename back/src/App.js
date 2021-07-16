@@ -1,7 +1,6 @@
 import React from "react";
 import './App.less';
 import './css/main.css';
-import { Layout, Menu, Breadcrumb, Button, Space } from 'antd';
 import {
   // HashRouter 能够在不改变真实网络请求地址的情况下做到页面切换
   // 比如 http://localhost/#/login，在刷新的时候还是对http://localhost/ 做网络请求
@@ -14,70 +13,114 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Layout, Menu, Breadcrumb, message, Alert } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, BarChartOutlined } from '@ant-design/icons';
+import { Button } from "antd/lib/radio";
+import Problems from "./pages/Problems";
+import Results from "./pages/Results";
+import { getHistory } from "./utils/utils";
+import Myself from "./pages/Myself";
+import About from "./pages/About";
+import Submit from "./pages/Submit";
+import store from "./data/store";
+import { setErrorInfo, setMessage, setConfig } from "./data/action";
 
-const { Header, Content, Footer } = Layout;
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
 
-// function App() {
-//   return (
-//     // <Layout className="layout">
-//     //   <Header>
-//     //     <div className="logo" />
-//     //     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-//     //       {new Array(15).fill(null).map((_, index) => {
-//     //         const key = index + 1;
-//     //         return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>;
-//     //       })}
-//     //     </Menu>
-//     //   </Header>
-//     //   <Content style={{ padding: '0 50px' }}>
-//     //     <Breadcrumb style={{ margin: '16px 0' }}>
-//     //       <Breadcrumb.Item>Home</Breadcrumb.Item>
-//     //       <Breadcrumb.Item>List</Breadcrumb.Item>
-//     //       <Breadcrumb.Item>App</Breadcrumb.Item>
-//     //     </Breadcrumb>
-//     //     <div className="site-layout-content">Content</div>
-//     //   </Content>
-//     //   <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-//     // </Layout>
-//     <div>
-//       <Button>TEST</Button>
-//     </div>
-//   );
-// }
+
+let subscribers = {};
+let last_data = {
+  config: null
+};
+
+store.subscribe(async () => {
+  let state = store.getState();
+  // console.log('redux update to', state);
+  // 保存 config
+  if (state.config.data) {
+    if (JSON.stringify(state.config.data) !== JSON.stringify(last_data.config)) {
+      // console.log('Config will change:', state.config.data);
+      state.config.save();
+      // if (store.getState().user && store.getState().config.data.settings_async) {
+      //   await api.request('sync', 'POST', { config: state.config.data });
+      // }
+    } else {
+      // console.log('Not change:', state.config.data);
+    }
+    last_data.config = state.config.data;
+  }
+  for (let subFunc in subscribers) {
+    subscribers[subFunc](state);
+  }
+});
 
 const App = () => {
-  return <div>
-    {/* <Alert message="Ant Design 测试" type="success" /> */}
-    {/* 单页切换功能需要在 <Router/> 组件内 */}
-    <Router>
-      {/* <Space/> 功能是为包括的组件之间添加合适的间隔 */}
-      <Space>
-        {/* <Link/> 是单页跳转链接，鼠标点击切换单页应用页面 */}
-        {/* 当然也有直接用 js 方法切换的方法 */}
-        导航：<Link to={'/'}>主页</Link><Link to={'/regist'}>注册</Link>
-      </Space>
-      <main>
-        {/* 单页切换的内容就在 <Switch/> 内进行切换 */}
-        <Switch>
-          {/* exact={true} 表示只有当 url 完全等于 path 的时候才会加载这个页面 */}
-          {/* 如果 exact={false}，以这个 path 开头的部分也会加载而不显示，加载相关代码会被执行 */}
-          <Route path={"/"} exact={true}>
-            {/* 这里可以直接写也可以引入其他页面 */}
-            <div>
-              <h1>主页</h1>
-              <p>
-                段落测试
-              </p>
-            </div>
-          </Route>
-          <Route path={"/regist"} exact={true}>
-            {/* <Regist></Regist> */}
-            <Button>Test</Button>
-          </Route>
-        </Switch>
-      </main>
-    </Router>
-  </div>
-};
+  const hashNow = window.location.hash.slice(2);
+  const defaultPage = 'problems';
+  if (hashNow === '') {
+    getHistory().push(defaultPage);
+  }
+  const pageNow = hashNow === '' ? defaultPage : hashNow;
+  const [errorInfoData, setErrorInfoData] = React.useState(null);
+  const [myMessage, setMyMessage] = React.useState(null);
+
+  // 注册一个当遇到错误的时候调用的钩子，用来显示错误信息
+  subscribers['Error'] = function (state) {
+    if (state.errorInfo) {
+      console.log('Error Hook: ', state.errorInfo);
+      setErrorInfoData(state.errorInfo);
+      // 清空错误信息
+      store.dispatch(setErrorInfo(null));
+    }
+  };
+  // 注册一个消息钩子
+  subscribers['Message'] = function (state) {
+    if (state.message) {
+      console.log('message: ', state.message);
+      // setMyMessage(state.message);
+      message.info(state.message);
+      store.dispatch(setMessage(null));
+    }
+  };
+
+  return (
+    <div style={{ height: "100%" }}>
+      {errorInfoData ? <Alert
+        message="Error"
+        description={`${errorInfoData}`}
+        type="error"
+        showIcon
+        closable
+        onClose={() => {
+          setErrorInfo(null);
+        }}
+      /> : null}
+      <Router>
+        <Layout style={{ height: "100%" }}>
+          <Header className="header">
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[pageNow]} onClick={e => {
+              getHistory().push(e.key);
+            }}>
+              <Menu.Item key="problems">题目</Menu.Item>
+              <Menu.Item key="submit">提交(调试)</Menu.Item>
+              <Menu.Item key="results">评测记录</Menu.Item>
+              <Menu.Item key="myself">我的</Menu.Item>
+              <Menu.Item key="about">关于</Menu.Item>
+            </Menu>
+          </Header>
+          <Switch>
+            <Route path="/problems" component={Problems} />
+            <Route path="/submit" component={Submit} />
+            <Route path="/results" component={Results} />
+            <Route path="/myself" component={Myself} />
+            <Route path="/about" component={About} />
+          </Switch>
+        </Layout>
+      </Router>
+    </div>
+  );
+}
 
 export default App;

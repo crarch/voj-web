@@ -5,7 +5,6 @@ const defaultState = {
   config: new Config(),
   errorInfo: null,
   message: null,
-  results: []
 }
 
 function config(state = defaultState.config, action) {
@@ -35,13 +34,4 @@ function message(state = defaultState.message, action) {
   }
 }
 
-function results(state = defaultState.results, action) {
-  switch (action.type) {
-    case "SET_RESULTS":
-      return action.data;
-    default:
-      return state;
-  }
-}
-
-export default combineReducers({ config, errorInfo, message, results });
+export default combineReducers({ config, errorInfo, message });

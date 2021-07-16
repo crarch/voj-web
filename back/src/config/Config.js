@@ -1,5 +1,5 @@
-import { createMuiTheme } from "@material-ui/core";
-import api from "./api/api";
+import api from "../api/api";
+console.log('api', api);
 
 const ITEM_NAME = "voj_config";
 
@@ -8,37 +8,20 @@ class Config {
     this.load = this.load.bind(this);
     this.save = this.save.bind(this);
     this.theme_avaliable = {
-      "默认主题": createMuiTheme({}),
-      '黑暗模式': createMuiTheme({
-        palette: {
-          type: "dark",
-          primary: {
-            main: blueGrey[500],
-          },
-          secondary: {
-            main: grey[500],
-          },
-        },
-      }),
+      "默认主题": null
     }
     // 在构造函数执行的时候加载保存的数据
     this.data_default = {
-      debug: false,
+      debug: true,
       version_frontend: 0.1,
-      // 显示主题
-      // theme_name: "黑暗模式",
       theme_name: "默认主题",
       theme_avaliable: [
         '默认主题',
-        '黑暗模式'
       ],
-      // 设置同步
-      settings_async: true,
-      // 远程登录服务器
-      remote_login: {
-        server: "ws://127.0.0.1:8081"
-      },
-      api_token: {}
+      api_token: {
+        access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MzQwMTg4NjI3NDB9.dnFnMq3giXDyeUEtAO0l5kkFaSCvT42mNhP_fk8v87k",
+        refresh_token: ""
+      }
     };
     this.data = this.data_default;
     this.theme = this.theme_avaliable["默认主题"];
@@ -79,7 +62,9 @@ class Config {
 
   save() {
     console.log("Config: saving config...");
-    this.data.api_token = api.get_token();
+    const tokens = api.get_token();
+    if (tokens.access_token || tokens.refresh_token)
+      this.data.api_token = tokens;
     const s = JSON.stringify(this.data);
     localStorage.setItem(ITEM_NAME, s);
     return s;

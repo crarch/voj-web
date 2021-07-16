@@ -221,28 +221,3 @@ export function getMailHost(emailAddress) {
     return mailHost;
   }
 }
-
-
-const codeName = "voj_code_storage";
-const codeIndex = "voj_code_index";
-export function saveCode(problemId, code) {
-  const time = new Date().getTime();
-  localStorage.setItem(`${codeName}_${problemId}_${time}`, code);
-  let codeIndexLast = JSON.parse(localStorage.getItem(`${codeIndex}_${problemId}`) || '[]');
-  codeIndexLast.push(time);
-  localStorage.setItem(`${codeIndex}_${problemId}`, JSON.stringify(codeIndexLast));
-}
-
-export function loadCodeIndex(problemId) {
-  // console.log('loadCodeIndex', JSON.parse(localStorage.getItem(`${codeIndex}_${problemId}`) || '[]'));
-  return JSON.parse(localStorage.getItem(`${codeIndex}_${problemId}`) || '[]');
-}
-
-export function loadCode(problemId, time) {
-  if (!time) {
-    time = loadCodeIndex(problemId).slice(-1);
-    if (time.length === 0) return null;
-    time = time[0];
-  }
-  return localStorage.getItem(`${codeName}_${problemId}_${time}`);
-}

@@ -18,9 +18,3 @@ export function setMessage(data) {
     dispatch({ type: "SET_MESSAGE", data: data });
   };
 }
-
-export function setResults(data) {
-  return dispatch => {
-    dispatch({ type: "SET_RESULTS", data: data });
-  };
-}
