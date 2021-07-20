@@ -77,6 +77,7 @@ class API {
       return { code: resp.status, error: resp.statusText };
     }
     let js = null;
+    const respCode = resp.status;
     try { js = await resp.json(); } catch (e) {
       console.error(e);
       store.dispatch(setErrorInfo(e));
@@ -89,7 +90,7 @@ class API {
       js.message = resp.statusText;
     }
     if (js.code === undefined) js.code = resp.status;
-    if (js.code === 422) {
+    if (respCode === 422) {
       if (this.refresh_token === '') {
         // 过期勒
         return null;
@@ -103,9 +104,10 @@ class API {
         // body: JSON.stringify({ refresh_token: this.refresh_token })
       });
       try {
+        const respCode2 = resp2.status;
         const js2 = await resp2.json();
         // console.log('updating ac_token', js2);
-        if (js2.code === 200) {
+        if (respCode2 === 200) {
           // this.set_token(js2.data.access_token, js2.data.refresh_token);
           this.set_token(js2.Authorization);
           this.update_config();
@@ -127,7 +129,7 @@ class API {
       }
       return this.request(router, method, data);
     }
-    if (js.code === 200) {
+    if (respCode === 200) {
       // 登录自动储存 JWT 数据
       if (router === 'session' && method === 'POST') {
         const { access_token, refresh_token } = js.data;
