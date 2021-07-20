@@ -155,7 +155,7 @@ store.subscribe(async () => {
 export default function App() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [errorDialogInfo, setErrorDialogInfo] = React.useState(false);
   const [myMessage, setMyMessage] = React.useState(null);
   const [hasLogin, setHasLogin] = React.useState(false);
@@ -165,9 +165,9 @@ export default function App() {
   const [requestingRemote, setRequesingRemote] = React.useState(false);
   const [openUser, setOpenUser] = React.useState(false);
 
-  // 拉大到800会打开，拉小到600关闭
-  const triggerWidthOpen = 800;
-  const triggerWidthClose = 600;
+  // // 拉大到800会打开，拉小到600关闭
+  // const triggerWidthOpen = 800;
+  // const triggerWidthClose = 600;
 
   const hashNow = window.location.hash.slice(2);
   const defaultPage = 'problems';
@@ -207,28 +207,29 @@ export default function App() {
       last_data.user = state.user;
     }
   };
-  // onMount & onUpdate
-  React.useEffect(() => {
-    const onWindowResize = () => {
-      let width = window.innerWidth;
-      // console.log(width);
-      if (!open && width >= triggerWidthOpen) setOpen(true);
-      if (open && width <= triggerWidthClose) setOpen(false);
-    };
-    window.addEventListener("load", onWindowResize);
-    window.addEventListener('resize', onWindowResize);
+  // // onMount & onUpdate
+  // React.useEffect(() => {
+  //   const onWindowResize = () => {
+  //     let width = window.innerWidth;
+  //     // console.log(width);
+  //     if (!open && width >= triggerWidthOpen) setOpen(true);
+  //     if (open && width <= triggerWidthClose) setOpen(false);
+  //   };
+  //   window.addEventListener("load", onWindowResize);
+  //   window.addEventListener('resize', onWindowResize);
 
-    return () => {
-      window.removeEventListener("load", onWindowResize);
-      window.removeEventListener("resize", onWindowResize);
-    };
-  });
+  //   return () => {
+  //     window.removeEventListener("load", onWindowResize);
+  //     window.removeEventListener("resize", onWindowResize);
+  //   };
+  // });
 
 
   const handleClickAction = () => {
-    if (window.innerWidth < 600 || window.location.pathname === '/') {
-      setOpen(false);
-    }
+    // 点击收起侧边栏
+    // if (window.innerWidth < 600 || window.location.pathname === '/') {
+    //   setOpen(false);
+    // }
   };
 
   const mainContent = <Router>

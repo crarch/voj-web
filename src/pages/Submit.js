@@ -56,7 +56,7 @@ endmodule`} problemId={state.problemId} onChange={value => { }} onSubmit={async 
       let isSucess = false;
       let testBench = null;
       do {
-        await sleep(1000);
+        await sleep(100);
         const resp2 = await api.request_key('judge/record', oid, "GET");
         console.log(resp2);
         isSucess = resp2.success;

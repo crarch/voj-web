@@ -1,7 +1,7 @@
 import Constants from "../config/Constants";
 // import { objectUpdate, urlEncode } from "../utils/utils";
-// import { setConfig, setErrorInfo } from "../data/action";
-// import store from "../data/store";
+import { setConfig, setErrorInfo } from "../data/action";
+import store from "../data/store";
 
 class API {
   constructor(props) {
@@ -72,14 +72,14 @@ class API {
       resp = await fetch(`${this.url}/${router}`, payload);
     } catch (e) {
       console.error(e);
-      // store.dispatch(setErrorInfo(e));
+      store.dispatch(setErrorInfo(e));
       resp = { status: 433, error: "Error when fetching internet" };
       return { code: resp.status, error: resp.statusText };
     }
     let js = null;
     try { js = await resp.json(); } catch (e) {
       console.error(e);
-      // store.dispatch(setErrorInfo(e));
+      store.dispatch(setErrorInfo(e));
       return { code: resp.status, error: resp.statusText };
     }
     console.log('raw js:', js);
@@ -141,7 +141,7 @@ class API {
         this.update_config();
       }
     } else {
-      // store.dispatch(setErrorInfo(js));
+      store.dispatch(setErrorInfo(js));
     }
     return js;
   }
