@@ -1,0 +1,50 @@
+{
+  "updated_at": 1626156897248,
+  "problem_set": [
+    {
+      "name": "Sequential Logic Circuit",
+      "problems": [
+        {
+          "tid": 2001,
+          "order": 1,
+          "title": "点灯",
+          "content": "\n下面这个电路输出的是1（高电平）\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '1.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n请修改示例代码让它输出0（低电平）\n\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '0.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n你能帮帮我吗.jpg\n\n预估代码量：大约一行\n```verilog\nmodule top_module(\n    output a,\n);\n    assign a=1;//fix me\nendmodule\n```\n"
+        }
+      ]
+    },
+    {
+      "name": "Combination Logic Circuit",
+      "problems": [
+        {
+          "tid": 3001,
+          "order": 1,
+          "title": "点灯",
+          "content": "\n下面这个电路输出的是1（高电平）\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '1.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n请修改示例代码让它输出0（低电平）\n\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '0.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n你能帮帮我吗.jpg\n\n预估代码量：大约一行\n```verilog\nmodule top_module(\n    output a,\n);\n    assign a=1;//fix me\nendmodule\n```\n"
+        }
+      ]
+    },
+    {
+      "name": "Verilog Basis",
+      "problems": [
+        {
+          "tid": 1001,
+          "order": 1,
+          "title": "点灯",
+          "content": "\n下面这个电路输出的是0（低电平）\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '0.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n请修改示例代码让它输出1（高电平）\n\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '1.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n你能帮帮我吗.jpg\n![](/problem/1001/example.png)\n\n预估代码量：大约一行(不能再多辣!!!\n```verilog\nmodule top_module(\n    output a\n);\n    assign a=0;//fix me\nendmodule\n```\n"
+        },
+        {
+          "tid": 1002,
+          "order": 2,
+          "title": "点灯",
+          "content": "\n下面这个电路输出的是1（高电平）\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '1.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n请修改示例代码让它输出0（低电平）\n\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '0.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n你能帮帮我吗.jpg\n\n预估代码量：大约一行\n```verilog\nmodule top_module(\n    output a,\n);\n    assign a=1;//fix me\nendmodule\n```\n"
+        },
+        {
+          "tid": 1003,
+          "order": 3,
+          "title": "点灯",
+          "content": "\n下面这个电路输出的是0（低电平）\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '0.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n请修改示例代码让它输出1（高电平）\n\n```wavedrom\n{ signal: [\n  [\"out\",{ name: \"a\", wave: '1.......' }],\n  {},\n  [\"ref\",{ name: \"a\", wave: '1.......' }],\n]}\n```\n\n你能帮帮我吗.jpg\n\n预估代码量：大约一行\n```verilog\nmodule top_module(\n    output a,\n);\n    assign a=0;\nendmodule\n```\n"
+        }
+      ]
+    }
+  ]
+}

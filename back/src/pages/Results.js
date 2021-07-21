@@ -12,7 +12,7 @@ const Results = () => {
     requesting: false
   });
   const setState = (update) => setInnerState(objectUpdate(state, update));
-  const [ignored, forceUpdate] = React.useState(x => x + 1, 0);
+  const [ignored, forceUpdate] = React.useReducer(x => x + 1, 0);
 
   const loadingContent = <Spin tip="Loading results..."></Spin>;
 
