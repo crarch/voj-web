@@ -7,7 +7,7 @@ require('codemirror/lib/codemirror.css');
 require('codemirror/mode/verilog/verilog');
 
 const EditorBar = (props) => {
-  const { problemId, onSave, onSubmit, onCheck, value, setValue } = props;
+  const { problemId, onSave, onSubmit, onCheck, value, setValue, requesting } = props;
   const [ignored, forceUpdate] = React.useReducer(x => x + 1, 0);
   const [selected, setSelected] = React.useState(0);
   const codeTimes = loadCodeIndex(problemId);
@@ -29,13 +29,13 @@ const EditorBar = (props) => {
         onSave && onSave(value);
         forceUpdate();
       }}>保存代码</Button>
-      <Button color="secondary" variant="contained" onClick={() => { onSubmit && onSubmit(value); }}>提交评测</Button>
+      <Button color="secondary" variant="contained" onClick={() => { onSubmit && onSubmit(value); }} disabled={requesting}>提交评测</Button>
     </div>
   </div>;
 };
 
 const Editor = (props) => {
-  const { defaultValue, problemId, onSave, onSubmit, onCheck, onKeyDown } = props;
+  const { defaultValue, requesting, problemId, onSave, onSubmit, onCheck, onKeyDown } = props;
   const defaultState = {
     codeValue: defaultValue || '',
     options: {

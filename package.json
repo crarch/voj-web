@@ -33,7 +33,7 @@
     "build": "yarn update && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "update": "node generate_problems_json.js"
+    "update": "node problems.js"
   },
   "eslintConfig": {
     "extends": [

@@ -50,6 +50,7 @@ import Myself from "./pages/Myself";
 import About from "./pages/About";
 import Submit from "./pages/Submit";
 import { getHistory } from "./utils/utils";
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const drawerWidth = 240;
 moment.locale('zh-cn');
@@ -294,12 +295,12 @@ export default function App() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-            <Route path="/problems" component={Problems} />
-            <Route path="/submit" component={Submit} />
-            <Route path="/results" component={Results} />
-            <Route path="/myself" component={Myself} />
-            <Route path="/about" component={About} />
-          </Switch>
+          <Route path="/problems" component={Problems} />
+          <Route path="/submit" component={Submit} />
+          <Route path="/results" component={Results} />
+          <Route path="/myself" component={Myself} />
+          <Route path="/about" component={About} />
+        </Switch>
       </main>
     </MuiPickersUtilsProvider>
   </Router>;
@@ -366,9 +367,9 @@ export default function App() {
               horizontal: 'right',
             }}
             open={myMessage !== null}
-            autoHideDuration={3000}
+            autoHideDuration={(myMessage && myMessage.duration) ? myMessage.duration : 3000}
             // onClose={(e) => { console.log(e); }}
-            message={myMessage}
+            message={(myMessage && myMessage.type) ? null : myMessage}
             action={
               <React.Fragment>
                 <IconButton size="small" aria-label="close" color="inherit" onClick={() => setMyMessage(null)}>
@@ -376,7 +377,12 @@ export default function App() {
                 </IconButton>
               </React.Fragment>
             }
-          />
+          >
+            {(myMessage && myMessage.type) ? <Alert severity={myMessage.type} onClose={() => setMyMessage(null)}>
+              <AlertTitle>{myMessage.title ? myMessage.title : myMessage.type}</AlertTitle>
+              <span style={{ minWidth: 250, display: "block" }}>{myMessage.text}</span>
+            </Alert> : null}
+          </Snackbar>
         </ThemeProvider>
       </ErrorBoundary>
     </div >

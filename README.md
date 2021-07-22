@@ -4,8 +4,10 @@
 
 ## TODO List
 
-- [ ] Add friendly message in judging result
+- [x] Add friendly message in judging result
   - [x] Add net error for all pages
+  - [x] Judging result message done. (Global message type.)
 - [ ] Adapt variable test benches
 - [x] Navbar expand on default
-- [ ] Modify waiting time for retireve judging result
+- [x] Modify waiting time for retireve judging result
+- [ ] Merge Submit.js and Problem.js
