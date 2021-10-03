@@ -225,8 +225,8 @@ export function getMailHost(emailAddress) {
 
 const codeName = "voj_code_storage";
 const codeIndex = "voj_code_index";
-export function saveCode(problemId, code) {
-  const time = new Date().getTime();
+export function saveCode(problemId, code, time_) {
+  const time = time_ || new Date().getTime();
   localStorage.setItem(`${codeName}_${problemId}_${time}`, code);
   let codeIndexLast = JSON.parse(localStorage.getItem(`${codeIndex}_${problemId}`) || '[]');
   codeIndexLast.push(time);
@@ -245,4 +245,14 @@ export function loadCode(problemId, time) {
     time = time[0];
   }
   return localStorage.getItem(`${codeName}_${problemId}_${time}`);
+}
+
+export function delCode(problemId, time) {
+  // saveCode(problemId, undefined, time);
+  localStorage.removeItem(`${codeName}_${problemId}_${time}`);
+  let codeIndexLast = JSON.parse(localStorage.getItem(`${codeIndex}_${problemId}`) || '[]');
+  // if (codeIndexLast.indexOf(time) >= 0)
+  //   delete codeIndexLast[codeIndexLast.indexOf(time)];
+  codeIndexLast = codeIndexLast.filter(t => t != time);
+  localStorage.setItem(`${codeIndex}_${problemId}`, JSON.stringify(codeIndexLast));
 }

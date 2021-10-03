@@ -19,35 +19,48 @@ const ResultItem = (props) => {
 }
 
 const Results = () => {
-  const results = store.getState().results || [];
+  // const results = store.getState().results || [];
   const [state, setInnerState] = React.useState({
     requesting: false,
-    page: 1
+    page: 1,
+    pageTotal: 100,
+    results: []
   });
   const setState = (update) => setInnerState(objectUpdate(state, update));
   const [ignored, forceUpdate] = React.useReducer(x => x + 1, 0);
 
-  const loading = (!results || (results && results.length === 0));
+  const loading = state.requesting && (!state.results || (state.results && state.results.length === 0));
 
-  if (loading) {
-    if (!state.requesting) {
-      setState({ requesting: true });
-      (async () => {
-        const resp = await api.request_key("judge/record/page", 1, "GET");
-        console.log(resp);
-        if (!isIterator(resp)) return;
-        store.dispatch(setResults(resp));
-        forceUpdate();
-      })();
-    }
+  console.log('state.requesting', state.requesting);
+
+  // if (loading) {
+  if (!state.requesting) {
+    setState({ requesting: true });
+    api.request_key("judge/record/page", state.page, "GET").then(resp => {
+      if (!isIterator(resp)) return;
+      setState({ results: resp, requesting: true });
+    });
+    // (async () => {
+    //   const resp = await api.request_key("judge/record/page", state.page, "GET");
+    //   // console.log(resp);
+    //   if (!isIterator(resp)) return;
+    //   // store.dispatch(setResults(resp));
+    //   // forceUpdate();
+    //   setState({ results: resp });
+    // })();
   }
+  // }
 
   return <Container maxWidth="lg">
+    <Typography variant="body" color="textSecondary">评测记录第{state.page}页，共{state.pageTotal}页。</Typography>
     {loading ? <LinearProgress color="secondary"></LinearProgress> : null}
     <List>
-      {results.map(result => <ResultItem result={result}></ResultItem>)}
+      {state.results.map(result => <ResultItem result={result}></ResultItem>)}
     </List>
-    <Pagination fullWidth count={100} defaultPage={1} page={state.page} onChange={(e, value) => { setState({ page: value }) }} boundaryCount={2} />
+    <Pagination fullWidth count={state.pageTotal} defaultPage={1}
+      page={state.page}
+      onChange={(e, value) => { setState({ page: value, requesting: false, results: [] }) }}
+      boundaryCount={2} />
   </Container>;
 };
 

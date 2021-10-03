@@ -5,8 +5,11 @@ const defaultState = {
   config: new Config(),
   errorInfo: null,
   message: null,
-  results: []
+  results: [],
+  user: null
 }
+
+// console.log('theme', defaultState);
 
 function config(state = defaultState.config, action) {
   switch (action.type) {
@@ -44,4 +47,13 @@ function results(state = defaultState.results, action) {
   }
 }
 
-export default combineReducers({ config, errorInfo, message, results });
+function user(state = defaultState.user, action) {
+  switch (action.type) {
+    case "SET_USER":
+      return action.data;
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ config, errorInfo, message, results, user });

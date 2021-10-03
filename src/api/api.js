@@ -35,11 +35,11 @@ class API {
     return this.request(`${router}/${key}`, method, data);
   }
   update_config() {
-    // let config = store.getState().config;
-    // config.data.api_token = this.get_token();
-    // console.log('config.data.api_token', config.data.api_token)
-    // config.save();
-    // store.dispatch(setConfig(config));
+    let config = store.getState().config;
+    config.data.api_token = this.get_token();
+    console.log('config.data.api_token', config.data.api_token)
+    config.save();
+    store.dispatch(setConfig(config));
   }
   load_from_config() {
     // const config = store.getState().config;
@@ -50,11 +50,12 @@ class API {
       'Content-Type': 'application/json',
     };
     if (refresh) {
-      headers['Refresh'] = this.refresh_token;
-    }
-    if (access) {
-      if (this.access_token !== '') headers['Authorization'] = this.access_token;
-    }
+      // headers['Refresh'] = this.refresh_token;
+      headers['Authorization'] = this.refresh_token;
+    } else
+      if (access) {
+        if (this.access_token !== '') headers['Authorization'] = this.access_token;
+      }
     return headers;
   }
   async request(router, method = "GET", data) {
@@ -90,7 +91,8 @@ class API {
       js.message = resp.statusText;
     }
     if (js.code === undefined) js.code = resp.status;
-    if (respCode === 422) {
+    // TODO: 注销
+    if (respCode === 401) {
       if (this.refresh_token === '') {
         // 过期勒
         return null;
@@ -109,18 +111,18 @@ class API {
         // console.log('updating ac_token', js2);
         if (respCode2 === 200) {
           // this.set_token(js2.data.access_token, js2.data.refresh_token);
-          this.set_token(js2.Authorization);
+          this.set_token(js2.Authorization, js2.Authorization);
           this.update_config();
           // // 更新user
           // const res = this.request('user', 'GET');
           // if (res.code === 200) {
-          //   // store.dispatch(setUser(res.data.user));
+          // store.dispatch(setUser(res.data.user));
           //   console.log('user', res);
           // }
         }
         else {
           // 判定为 update_token 也过期，要求重新登录
-          // store.dispatch(setErrorInfo("登录过期，请重新登录"));
+          store.dispatch(setErrorInfo("登录过期，请重新登录"));
           return null;
         }
       } catch (e) {
@@ -132,10 +134,18 @@ class API {
     if (respCode === 200) {
       // 登录自动储存 JWT 数据
       if (router === 'session' && method === 'POST') {
-        const { access_token, refresh_token } = js.data;
+        // const { access_token, refresh_token } = js.data;
+        const { access_token, refresh_token } = {
+          access_token: js.Authorization,
+          refresh_token: js.Authorization
+        };
         // console.log('jwt', access_token, refresh_token);
         this.set_token(access_token, refresh_token);
         this.update_config();
+        let config = store.getState().config;
+        config.data.user = data.user_email;
+        config.save();
+        store.dispatch(setConfig(config));
       } else if (router === 'session' && method === 'DELETE') {
         // 注销
         // console.warn('注销');

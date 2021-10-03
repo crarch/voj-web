@@ -19,6 +19,12 @@ export function setMessage(data) {
   };
 }
 
+export function setUser(data) {
+  return dispatch => {
+    dispatch({ type: "SET_USER", data: data });
+  };
+}
+
 export function setResults(data) {
   return dispatch => {
     dispatch({ type: "SET_RESULTS", data: data });

@@ -1,4 +1,7 @@
-import { createMuiTheme } from "@material-ui/core";
+// import { createMuiTheme } from "@material-ui/core";
+import { orange, grey, blueGrey, teal, green } from '@material-ui/core/colors';
+// import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import api from "./api/api";
 
 const ITEM_NAME = "voj_config";
@@ -7,9 +10,23 @@ class Config {
   constructor() {
     this.load = this.load.bind(this);
     this.save = this.save.bind(this);
+    // this.theme_avaliable = {
+    //   "默认主题": createTheme({}),
+    //   '黑暗模式': createTheme({
+    //     palette: {
+    //       type: "dark",
+    //       primary: {
+    //         main: blueGrey[500],
+    //       },
+    //       secondary: {
+    //         main: grey[500],
+    //       },
+    //     },
+    //   }),
+    // }
     this.theme_avaliable = {
-      "默认主题": createMuiTheme({}),
-      '黑暗模式': createMuiTheme({
+      "默认主题": {},
+      '黑暗模式': {
         palette: {
           type: "dark",
           primary: {
@@ -19,7 +36,7 @@ class Config {
             main: grey[500],
           },
         },
-      }),
+      },
     }
     // 在构造函数执行的时候加载保存的数据
     this.data_default = {
@@ -38,10 +55,13 @@ class Config {
       remote_login: {
         server: "ws://127.0.0.1:8081"
       },
-      api_token: {}
+      api_token: {},
+      user: null
     };
     this.data = this.data_default;
     this.theme = this.theme_avaliable["默认主题"];
+    // console.log('theme', this.theme);
+    console.log('make theme', createTheme({}))
     this.load();
   }
 

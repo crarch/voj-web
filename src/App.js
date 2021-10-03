@@ -30,6 +30,8 @@ import {
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Provider } from 'react-redux'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { orange, grey, blueGrey, teal, green, pink } from '@material-ui/core/colors';
+import { createTheme } from '@material-ui/core/styles';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -51,6 +53,7 @@ import About from "./pages/About";
 import Submit from "./pages/Submit";
 import { getHistory } from "./utils/utils";
 import { Alert, AlertTitle } from '@material-ui/lab';
+import Login from './pages/Login';
 
 const drawerWidth = 240;
 moment.locale('zh-cn');
@@ -157,7 +160,7 @@ export default function App() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const [errorDialogInfo, setErrorDialogInfo] = React.useState(false);
+  const [errorDialogInfo, setErrorDialogInfo] = React.useState(null);
   const [myMessage, setMyMessage] = React.useState(null);
   const [hasLogin, setHasLogin] = React.useState(false);
   const titleDefault = "Verilog OJ";
@@ -285,8 +288,8 @@ export default function App() {
         </div>
         <Divider />
         <List onClick={handleClickAction}>
-          <ListItemLink to="/problems" primary="题目" icon={<DashboardIcon />} />
-          <ListItemLink to="/submit" primary="提交(调试)" icon={<AssignmentIcon />} />
+          <ListItemLink to="/problems/:tid" primary="题目" icon={<DashboardIcon />} />
+          {/* <ListItemLink to="/submit" primary="提交(调试)" icon={<AssignmentIcon />} /> */}
           <ListItemLink to="/results" primary="评测记录" icon={<EqualizerIcon />} />
           <ListItemLink to="/myself" primary="我的" icon={<SettingsIcon />} />
           <ListItemLink to="/about" primary="关于" icon={<InfoIcon />} />
@@ -296,7 +299,7 @@ export default function App() {
         <div className={classes.toolbar} />
         <Switch>
           <Route path="/problems" component={Problems} />
-          <Route path="/submit" component={Submit} />
+          {/* <Route path="/submit" component={Submit} /> */}
           <Route path="/results" component={Results} />
           <Route path="/myself" component={Myself} />
           <Route path="/about" component={About} />
@@ -324,12 +327,54 @@ export default function App() {
   //   content = <RemoteLogin></RemoteLogin>
   // }
 
-  const content = mainContent;
+  // TODO: 要一个请求用户的用户名的 API 罢，求求了
+  // const content = mainContent;
+  // const content = <Login></Login>;
+  const content = store.getState().config.data.user ? mainContent : <Login></Login>;
+  // console.log('theme', store.getState().config);
+  const themes = {
+    "默认主题": {
+      palette: {
+        primary: {
+          main: teal[500]
+        },
+        secondary: {
+          main: green[500]
+        },
+        success: {
+          main: green[500],
+        }
+      },
+    },
+    "黑暗模式": {
+      palette: {
+        type: "dark",
+        primary: {
+          main: blueGrey[500],
+        },
+        secondary: {
+          main: grey[500],
+        },
+      },
+    },
+    "diana": {
+      palette: {
+        secondary: {
+          main: "#FEDBC4"
+        },
+        primary: {
+          main: "#FB756E"
+        }
+      }
+    }
+  };
+  const mui_theme = "diana";
 
   return (
     <div className={classes.root}>
       <ErrorBoundary>
-        <ThemeProvider theme={store.getState().config.theme}>
+        {/* <ThemeProvider theme={store.getState().config.theme}> */}
+        <ThemeProvider theme={createTheme(themes[mui_theme])}>
           {content}
           <Dialog fullWidth open={openUser} onClose={() => { setOpenUser(false); }}>
             <DialogContent>
@@ -367,9 +412,10 @@ export default function App() {
               horizontal: 'right',
             }}
             open={myMessage !== null}
-            autoHideDuration={(myMessage && myMessage.duration) ? myMessage.duration : 3000}
+            autoHideDuration={(myMessage && myMessage.duration) ? myMessage.duration : 5000}
             // onClose={(e) => { console.log(e); }}
             message={(myMessage && myMessage.type) ? null : myMessage}
+            onClose={() => setMyMessage(null)}
             action={
               <React.Fragment>
                 <IconButton size="small" aria-label="close" color="inherit" onClick={() => setMyMessage(null)}>
