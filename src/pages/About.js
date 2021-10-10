@@ -25,7 +25,7 @@ const About = () => {
     
     <Typography variant="h2"><br /><br /><br /><br /></Typography>
     <div>
-      <img src="/favicon.svg" style="float:left;border-right-width:10px" height="72" weight="72">
+      <img src="/favicon.svg" style="float:left;border-right-width:10px" height="72" weight="72"></img>
       <p style="font-size:55px;margin-block-start:0;margin-block-end:0;color:#1D50A2">Computer Architecture Research,HITSZCRA</p>
     </div>
   </Container>;
