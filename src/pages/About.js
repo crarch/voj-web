@@ -22,6 +22,8 @@ const About = () => {
 
     <Typography variant="h2">Advertisement</Typography>
     <Typography variant="body1" color="black">Computer Architecture Research,HITSZCRA may undertake ECEI Cloud Infrastructure Project. We are looking for 1)Senior Linux Developer 2)Senior Rust Developer 3)Senior Web Developer 4)Senior DBA(Specialized in TiDB) 5)Distribute Block Storage Expert 6)System Architect Expert(Specialized in Cloud Computing and Virtualization) to join our team. Please send us your CV if your are interested in our project.</Typography>
+    
+    <Typography variant="h2"><br /><br /><br /><br /></Typography>
     <div>
       <img src="/favicon.svg" style="float:left;border-right-width:10px" height="72" weight="72">
       <p style="font-size:55px;margin-block-start:0;margin-block-end:0;color:#1D50A2">Computer Architecture Research,HITSZCRA</p>
