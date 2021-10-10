@@ -26,7 +26,7 @@ const About = () => {
     <Typography variant="body1">
       <img src="/favicon.svg" style="float:left;border-right-width:10px" height="72" weight="72"></img>
     </Typography>
-    <Typography variant="body1" style="font-size:55px;margin-block-start:0;margin-block-end:0;color:#1D50A2">Computer Architecture Research,HITSZCRA</Typography>
+    //<Typography variant="body1" style="font-size:55px;margin-block-start:0;margin-block-end:0;color:#1D50A2">Computer Architecture Research,HITSZCRA</Typography>
   </Container>;
 };
 
