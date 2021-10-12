@@ -11,8 +11,8 @@ const About = () => {
         setClicked(1);
         window.open("https://space.bilibili.com/672328094", "_blank");
       } else {
-        window.open("https://phyzait.moe/", "_blank");
         window.open("https://chiro.work/", "_blank");
+        window.open("https://phyzait.moe/", "_blank");
       }
     }}>访问作者主页</Button>
 
