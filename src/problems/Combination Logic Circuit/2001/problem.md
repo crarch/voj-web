@@ -4,9 +4,7 @@ tid:2001
 order:1
 ---
 
-See hitsz-cslab.gitee.io/diglogic/lab1/s1/ for detail
-
-The name of Top module should be `top_module`
+The name of Top module should be top_module
 
 Following is an example
 
