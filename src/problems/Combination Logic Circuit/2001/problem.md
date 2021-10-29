@@ -1,5 +1,5 @@
 ---
-title:Parameterized Mux
+title:3-8 Decoder
 tid:2001
 order:1
 ---
@@ -10,20 +10,13 @@ Following is an example
 
 ```verilog
 module top_module
-#(parameter Port_Num=2,parameter WIDTH=8)
 (
-    input [(WIDTH-1):0] a,
-    input [(WIDTH-1):0] b,
-    input [(WIDTH-1):0] c,
-    input [(WIDTH-1):0] d,
-    input [(WIDTH-1):0] e,
-    input [(WIDTH-1):0] f,
-    input [(WIDTH-1):0] g,
-    input [(WIDTH-1):0] h,
-    output reg [(WIDTH-1):0] q
+    input clk,rst,enable,
+    input [2:0] switch,
+    output [7:0] led 
 );
     
-    assign q=a&b&c&d&e&f&g&h;
+    assign led=8'hff;//fix me
     
 endmodule
 ```
