@@ -11,7 +11,8 @@ Following is an example
 ```verilog
 module top_module
 (
-    input clk,rst,enable,
+    input clk,rst,
+    input [2:0] enable,
     input [2:0] switch,
     output [7:0] led 
 );
