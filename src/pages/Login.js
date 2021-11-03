@@ -49,7 +49,7 @@ function LoginFrame(props) {
     <br />
     <Divider></Divider>
     <br />
-    <TextField fullWidth ref={refUsername} label="邮箱，用于登录和找回密码" variant="outlined" value={state.username} onChange={e => {
+    <TextField fullWidth ref={refUsername} label="邮箱，用于登录和找回密码(测试邮箱: test)" variant="outlined" value={state.username} onChange={e => {
       setState({ username: e.target.value });
     }} onKeyDown={e => {
       if (e.code === "Enter") {
@@ -57,7 +57,7 @@ function LoginFrame(props) {
       }
     }} />
     <br /><br />
-    <TextField fullWidth ref={refPassword} label="密码" variant="outlined" value={state.password} type="password" onChange={e => {
+    <TextField fullWidth ref={refPassword} label="密码(测试账号密码: test)" variant="outlined" value={state.password} type="password" onChange={e => {
       setState({ password: e.target.value });
     }} onKeyDown={e => {
       if (e.code === "Enter") {
