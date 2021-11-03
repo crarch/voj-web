@@ -14,10 +14,11 @@ module top_module
     input clk,rst,
     input [2:0] enable,
     input [2:0] switch,
-    output [7:0] led 
+    output wire [7:0] led 
 );
-    
-    assign led=8'hff;//fix me
+    always@(posedge clk)begin
+        led<=8'hff;//fix me
+    end
     
 endmodule
 ```
