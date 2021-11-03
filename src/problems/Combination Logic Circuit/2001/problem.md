@@ -14,7 +14,7 @@ module top_module
     input clk,rst,
     input [2:0] enable,
     input [2:0] switch,
-    output wire [7:0] led 
+    output reg [7:0] led 
 );
     always@(posedge clk)begin
         led<=8'hff;//fix me
