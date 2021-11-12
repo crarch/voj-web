@@ -1,7 +1,7 @@
 ---
-title:Shift Light I
-tid:3001
-order:1
+title:Shift Light II
+tid:3002
+order:2
 ---
 
 See https://hitsz-cslab.gitee.io/diglogic/lab2/s2/
@@ -11,17 +11,11 @@ module top_module(
     input  wire       clk   ,
 	input  wire       rst   ,
 	input  wire       button,
-	output reg  [7:0] led
+	input wire [2:0] switch,
+	output reg  [15:0] led
 );
     always@(posedge clk or posedge rst)begin
-        if(rst)begin
-            led<=8'h1;
-        end
-        else begin
-            led<=led;//fix me
-        end
+        led<=16'b0;//fix me
     end
-    
-    
 endmodule
 ```
