@@ -1,6 +1,6 @@
 # voj_web
 
-[Verilog OJ 前端。](https://vojapi.crarch.hitsz.org)
+[Verilog OJ 前端。](https://voj.hitsz.org)
 
 ## TODO List
 
